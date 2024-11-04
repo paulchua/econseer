@@ -9,11 +9,51 @@
 		<title>Editorial by HTML5 UP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='assets/css/main.css') }}">
-		 <!-- Load Google Charts library -->
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/main.css') }}">
+		<!-- Load Google Charts library -->
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script>
+		// Load the Google Charts library and the gauge package
+		google.charts.load('current', { packages: ['gauge'] });
+    
+		// Fetch data from Flask endpoint
+		fetch('/chart-data')
+        .then(response => response.json())
+        .then(data => {
+            const latestValue = data.values[data.values.length - 1]; // Get the last value in the data
+            
+            // Draw the gauge chart with the fetched value
+            google.charts.setOnLoadCallback(() => drawGaugeChart(latestValue));
+        })
+        .catch(error => console.error('Error fetching data:', error));
+
+		function drawGaugeChart(value) {
+        // Set up the data for the gauge chart
+        const data = google.visualization.arrayToDataTable([
+            ['Label', 'Value'],
+            ['Metric', value]
+        ]);
+
+        // Set up options for the gauge chart
+        const options = {
+            width: 200,
+            height: 200,
+            redFrom: 75, redTo: 100,
+            yellowFrom: 50, yellowTo: 75,
+            greenFrom: 0, greenTo: 50,
+            minorTicks: 5,
+            max: 100, // Set max based on your data range
+            backgroundColor: '#008000' // Set background to green
+        };
+
+        // Render the gauge chart in the div
+        const chart = new google.visualization.Gauge(document.getElementById('gauge_chart_div'));
+        chart.draw(data, options);
+    }
+	</script>
 	</head>
 	<body class="is-preload">
+
 		<!-- Wrapper -->
 			<div id="wrapper">
 
@@ -39,92 +79,15 @@
 										<header>
 											<h1>Hi, I’m Editorial<br />
 											by HTML5 UP</h1>
-											 <div id="gauge_chart_div" style="width: 400px; height: 400px;"></div>
-
-    <script>
-        // Load the Google Charts library and the gauge package
-        google.charts.load('current', { packages: ['gauge'] });
-        
-        // Fetch data from Flask endpoint
-        fetch('/chart-data')
-            .then(response => response.json())
-            .then(data => {
-                const latestValue = data.values[data.values.length - 1]; // Get the last value in the data
-                
-                // Draw the gauge chart with the fetched value
-                google.charts.setOnLoadCallback(() => drawGaugeChart(latestValue));
-            })
-            .catch(error => console.error('Error fetching data:', error));
-
-        function drawGaugeChart(value) {
-            // Set up the data for the gauge chart
-            const data = google.visualization.arrayToDataTable([
-                ['Label', 'Value'],
-                ['Metric', value]
-            ]);
-
-            // Set up options for the gauge chart
-            const options = {
-                width: 400,
-                height: 400,
-                redFrom: 75, redTo: 100,
-                yellowFrom: 50, yellowTo: 75,
-                greenFrom: 0, greenTo: 50,
-                minorTicks: 5,
-                max: 100 // Set max based on your data range
-            };
-
-            // Render the gauge chart in the div
-            const chart = new google.visualization.Gauge(document.getElementById('gauge_chart_div'));
-            chart.draw(data, options);
-        }
-    </script>
+											<p>A free and fully responsive site template</p>
 										</header>
-                                         <script>
-        // Load the Google Charts library and the gauge package
-        google.charts.load('current', { packages: ['gauge'] });
-        
-        // Fetch data from Flask endpoint
-        fetch('/chart-data')
-            .then(response => response.json())
-            .then(data => {
-                const latestValue = data.values[data.values.length - 1]; // Get the last value in the data
-                
-                // Draw the gauge chart with the fetched value
-                google.charts.setOnLoadCallback(() => drawGaugeChart(latestValue));
-            })
-            .catch(error => console.error('Error fetching data:', error));
-
-        function drawGaugeChart(value) {
-            // Set up the data for the gauge chart
-            const data = google.visualization.arrayToDataTable([
-                ['Label', 'Value'],
-                ['Metric', value]
-            ]);
-
-            // Set up options for the gauge chart
-            const options = {
-                width: 400,
-                height: 400,
-                redFrom: 75, redTo: 100,
-                yellowFrom: 50, yellowTo: 75,
-                greenFrom: 0, greenTo: 50,
-                minorTicks: 5,
-                max: 100 // Set max based on your data range
-            };
-
-            // Render the gauge chart in the div
-            const chart = new google.visualization.Gauge(document.getElementById('gauge_chart_div'));
-            chart.draw(data, options);
-        }
-    </script>
+										<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. Pellentesque sapien ac quam. Lorem ipsum dolor sit nullam.</p>
 										<ul class="actions">
 											<li><a href="#" class="button big">Learn More</a></li>
 										</ul>
 									</div>
 									<span class="image object">
-										<img src="../static/images/pic10.jpg" alt="" />
-									
+										<img src="images/pic10.jpg" alt="" />
 									</span>
 								</section>
 
@@ -320,11 +283,11 @@
 			</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<script src="js/jquery.min.js"></script>
+			<script src="js/browser.min.js"></script>
+			<script src="js/breakpoints.min.js"></script>
+			<script src="js/util.js"></script>
+			<script src="js/main.js"></script>
 
 	</body>
 </html>
