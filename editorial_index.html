@@ -6,51 +6,91 @@
 -->
 <html>
 	<head>
-		<title>Editorial by HTML5 UP</title>
+		<title>EconSeer</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/main.css') }}">
-		<!-- Load Google Charts library -->
-		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-		<script>
-		// Load the Google Charts library and the gauge package
-		google.charts.load('current', { packages: ['gauge'] });
-    
-		// Fetch data from Flask endpoint
-		fetch('/chart-data')
-        .then(response => response.json())
-        .then(data => {
-            const latestValue = data.values[data.values.length - 1]; // Get the last value in the data
-            
-            // Draw the gauge chart with the fetched value
-            google.charts.setOnLoadCallback(() => drawGaugeChart(latestValue));
-        })
-        .catch(error => console.error('Error fetching data:', error));
 
-		function drawGaugeChart(value) {
-        // Set up the data for the gauge chart
-        const data = google.visualization.arrayToDataTable([
-            ['Label', 'Value'],
-            ['Metric', value]
-        ]);
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        // Load the Google Charts library and the Gauge package
+        google.charts.load('current', { packages: ['gauge'] });
 
-        // Set up options for the gauge chart
-        const options = {
-            width: 200,
-            height: 200,
-            redFrom: 75, redTo: 100,
-            yellowFrom: 50, yellowTo: 75,
-            greenFrom: 0, greenTo: 50,
-            minorTicks: 5,
-            max: 100, // Set max based on your data range
-            backgroundColor: '#008000' // Set background to green
-        };
+        // Set callback to fetch and draw charts
+        google.charts.setOnLoadCallback(() => {
+            fetchChartData('/chart-data', 'gauge_chart_div', {
+                redFrom: 75, redTo: 100,
+                yellowFrom: 50, yellowTo: 75,
+                greenFrom: 0, greenTo: 50,
+                max: 100,
+                label: 'Metric'
+            });
+            fetchChartData('/chart-unemployment', 'gauge_unemployment', {
+                redFrom: 8, redTo: 12,
+                yellowFrom: 5, yellowTo: 8,
+                greenFrom: 0, greenTo: 5,
+                max: 12,
+                label: 'Unemployment'
+            });
+            fetchChartData('/chart-permits', 'gauge_permits', {
+                redFrom: 8, redTo: 12,
+                yellowFrom: 5, yellowTo: 8,
+                greenFrom: 0, greenTo: 5,
+                max: 12,
+                label: 'Permits'
+            });
+            fetchChartData('/chart-cci', 'gauge_cci', {
+                redFrom: 8, redTo: 12,
+                yellowFrom: 5, yellowTo: 8,
+                greenFrom: 0, greenTo: 5,
+                max: 12,
+                label: 'CCI'
+            });
+        });
 
-        // Render the gauge chart in the div
-        const chart = new google.visualization.Gauge(document.getElementById('gauge_chart_div'));
-        chart.draw(data, options);
-    }
-	</script>
+        // Function to fetch data and draw a gauge chart
+        function fetchChartData(endpoint, elementId, options) {
+            fetch(endpoint)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.values && data.values.length > 0) {
+                        const latestValue = data.values[data.values.length - 1]; // Use the latest value
+                        drawGaugeChart(latestValue, elementId, options);
+                    } else {
+                        console.error(`No data found from endpoint: ${endpoint}`);
+                    }
+                })
+                .catch(error => console.error(`Error fetching data from ${endpoint}:`, error));
+        }
+
+        // Function to draw the Gauge Chart
+        function drawGaugeChart(value, elementId, options) {
+            // Prepare the data for the gauge chart
+            const data = google.visualization.arrayToDataTable([
+                ['Label', 'Value'],
+                [options.label, value]
+            ]);
+
+            // Configure options for the gauge chart
+            const chartOptions = {
+                width: 200,
+                height: 200,
+                redFrom: options.redFrom,
+                redTo: options.redTo,
+                yellowFrom: options.yellowFrom,
+                yellowTo: options.yellowTo,
+                greenFrom: options.greenFrom,
+                greenTo: options.greenTo,
+                minorTicks: 5,
+                max: options.max,
+                backgroundColor: '#f4f4f4'
+            };
+
+            // Render the chart into the specified div
+            const chart = new google.visualization.Gauge(document.getElementById(elementId));
+            chart.draw(data, chartOptions);
+        }
+    </script>
 	</head>
 	<body class="is-preload">
 
@@ -63,7 +103,7 @@
 
 							<!-- Header -->
 								<header id="header">
-									<a href="index.html" class="logo"><strong>Editorial</strong> by HTML5 UP</a>
+									<a href="index.html" class="logo"><strong>EconSeer</strong> by Paul Chua</a>
 									<ul class="icons">
 										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
 										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
@@ -77,9 +117,8 @@
 								<section id="banner">
 									<div class="content">
 										<header>
-											<h1>Hi, I’m Editorial<br />
-											by HTML5 UP</h1>
-											<p>A free and fully responsive site template</p>
+											<h1>The Chua Indicator</h1>
+											<p>Your Edge in Anticipating Economic Shifts</p>
 										</header>
 										<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. Pellentesque sapien ac quam. Lorem ipsum dolor sit nullam.</p>
 										<ul class="actions">
@@ -105,21 +144,21 @@
 											</div>
 										</article>
 										<article>
-											<span class="icon solid fa-paper-plane"></span>
+												<div id="gauge_unemployment" style="width: 200px; height: 200px;"></div>
 											<div class="content">
 												<h3>Sapien veroeros</h3>
 												<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
 											</div>
 										</article>
 										<article>
-											<span class="icon solid fa-rocket"></span>
+											<div id="gauge_permits" style="width: 200px; height: 200px;"></div>
 											<div class="content">
 												<h3>Quam lorem ipsum</h3>
 												<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
 											</div>
 										</article>
 										<article>
-											<span class="icon solid fa-signal"></span>
+											<div id="gauge_cci" style="width: 200px; height: 200px;"></div>
 											<div class="content">
 												<h3>Sed magna finibus</h3>
 												<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
@@ -286,8 +325,8 @@
 			<script src="../static/js/jquery.min.js"></script>
 			<script src="../static/js/browser.min.js"></script>
 			<script src="../static/js/breakpoints.min.js"></script>
-			<script src="../static/js//util.js"></script>
-			<script src="../static/js//main.js"></script>
+			<script src="../static/js/util.js"></script>
+			<script src="../static/js/main.js"></script>
 
 	</body>
 </html>
