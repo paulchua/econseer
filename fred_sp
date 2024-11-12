@@ -1,0 +1,19 @@
+SELECT 
+    current_row.`index` AS current_index,
+    current_row.`value` AS current_value,
+    previous_row.`value` AS previous_value,
+    CASE
+        WHEN previous_row.`value` IS NOT NULL AND previous_row.`value` != 0
+        THEN ((current_row.`value` - previous_row.`value`) / previous_row.`value`) * 100
+        ELSE NULL
+    END AS percent_change
+FROM 
+    fred_sp AS current_row
+LEFT JOIN 
+    fred_sp AS previous_row
+ON 
+    current_row.`index` = previous_row.`index` + 365
+WHERE 
+    current_row.`index` >= 365
+ORDER BY 
+    current_row.`index`;
