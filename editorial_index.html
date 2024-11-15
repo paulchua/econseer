@@ -46,6 +46,48 @@
                 max: 12,
                 label: 'CCI'
             });
+            fetchChartData('/chart-bbkli', 'gauge_bbkli', {
+                redFrom: 8, redTo: 12,
+                yellowFrom: 5, yellowTo: 8,
+                greenFrom: 0, greenTo: 5,
+                max: 12,
+                label: 'BBKLI'
+            });
+            fetchChartData('/chart-creditcard', 'gauge_creditcard', {
+                redFrom: 8, redTo: 12,
+                yellowFrom: 5, yellowTo: 8,
+                greenFrom: 0, greenTo: 5,
+                max: 12,
+                label: 'Creditcard'
+            });
+            fetchChartData('/chart-csm', 'gauge_csm', {
+                redFrom: 8, redTo: 12,
+                yellowFrom: 5, yellowTo: 8,
+                greenFrom: 0, greenTo: 5,
+                max: 12,
+                label: 'CSM'
+            });
+            fetchChartData('/chart-realestate', 'gauge_realestate', {
+                redFrom: 8, redTo: 12,
+                yellowFrom: 5, yellowTo: 8,
+                greenFrom: 0, greenTo: 5,
+                max: 12,
+                label: 'Realestate'
+            });
+            fetchChartData('/chart-yieldcurve', 'gauge_yieldcurve', {
+                redFrom: 8, redTo: 12,
+                yellowFrom: 5, yellowTo: 8,
+                greenFrom: 0, greenTo: 5,
+                max: 12,
+                label: 'Yieldcurve'
+            });
+            fetchChartData('/chart-erp', 'gauge_erp', {
+                redFrom: 31, redTo: 60,
+                yellowFrom: 1, yellowTo:30,
+                greenFrom: -60, greenTo: 0,
+                max: 60,
+                label: 'ERP'
+            });
         });
 
         // Function to fetch data and draw a gauge chart
@@ -133,14 +175,17 @@
 							<!-- Section -->
 								<section>
 									<header class="major">
-										<h2>Erat lacinia</h2>
+										<h2>Valuation Models</h2>
 									</header>
 									<div class="features">
 										<article>
-											<div id="gauge_chart_div" style="width: 200px; height: 200px;"></div>
+											<div id="gauge_erp" style="width: 200px; height: 200px;"></div>
 											<div class="content">
-												<h3>Quarterly GDP Growth (Annualized Percent)</h3>
-												<p>Rising GDP signals economic growth, with more production, employment, and spending, while declining GDP suggests a slowdown.</p>
+												<h3>The Equity Premium</h3>
+												<p>The difference between the return of the S&P and the return on a 10 Year Treasure.</p>
+												<ul class="actions">
+											    <li><a href="#" class="button small">Learn More</a></li>
+										</ul>
 											</div>
 										</article>
 										<article>
@@ -174,7 +219,7 @@
 									</header>
 									<div class="posts">
 										<article>
-											<a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
+											<a href="#" class="image"><div id="gauge_bbkli" style="width: 200px; height: 200px;"></div></a>
 											<h3>Interdum aenean</h3>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
 											<ul class="actions">
@@ -182,7 +227,7 @@
 											</ul>
 										</article>
 										<article>
-											<a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
+											<a href="#" class="image"><div id="gauge_creditcard" style="width: 200px; height: 200px;"></div></a>
 											<h3>Nulla amet dolore</h3>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
 											<ul class="actions">
@@ -190,7 +235,7 @@
 											</ul>
 										</article>
 										<article>
-											<a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>
+											<a href="#" class="image"><div id="gauge_csm" style="width: 200px; height: 200px;"></div></a>
 											<h3>Tempus ullamcorper</h3>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
 											<ul class="actions">
@@ -198,7 +243,7 @@
 											</ul>
 										</article>
 										<article>
-											<a href="#" class="image"><img src="images/pic04.jpg" alt="" /></a>
+											<a href="#" class="image"><div id="gauge_realestate" style="width: 200px; height: 200px;"></div></a>
 											<h3>Sed etiam facilis</h3>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
 											<ul class="actions">
@@ -206,7 +251,7 @@
 											</ul>
 										</article>
 										<article>
-											<a href="#" class="image"><img src="images/pic05.jpg" alt="" /></a>
+											<a href="#" class="image"><div id="gauge_yieldcurve" style="width: 200px; height: 200px;"></div></a>
 											<h3>Feugiat lorem aenean</h3>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
 											<ul class="actions">
@@ -214,7 +259,7 @@
 											</ul>
 										</article>
 										<article>
-											<a href="#" class="image"><img src="images/pic06.jpg" alt="" /></a>
+											<a href="#" class="image"><div id="gauge_chart_div" style="width: 200px; height: 200px;"></div></a>
 											<h3>Amet varius aliquam</h3>
 											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
 											<ul class="actions">
